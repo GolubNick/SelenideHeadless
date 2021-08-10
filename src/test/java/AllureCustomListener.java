@@ -6,12 +6,9 @@ import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StatusDetails;
 import io.qameta.allure.model.StepResult;
-import io.qameta.allure.selenide.AllureSelenide;
 import io.qameta.allure.util.ResultsUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-
-import javax.security.auth.kerberos.KerberosTicket;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
