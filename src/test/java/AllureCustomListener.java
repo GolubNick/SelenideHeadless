@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class AllureCustomListener implements LogEventListener {
 
-    private boolean saveScreenshots;
+    private boolean saveScreenshots = false;
 
     private final AllureLifecycle lifecycle;
 
@@ -26,43 +26,39 @@ public class AllureCustomListener implements LogEventListener {
         this.lifecycle = lifecycle;
     }
 
-    public AllureCustomListener screenshots(boolean saveScreenshots) {
+    public AllureCustomListener setSaveScreenshots(boolean saveScreenshots) {
         this.saveScreenshots = saveScreenshots;
         return this;
+    }
+
+    public boolean isSaveScreenshotsEnabled() {
+        return this.saveScreenshots;
     }
 
 
         @Override
     public void afterEvent(final LogEvent event) {
-        lifecycle.getCurrentTestCase().ifPresent(uuid -> {
-            final String stepUUID = UUID.randomUUID().toString();
-            lifecycle.startStep(stepUUID, new StepResult()
-                    .setName(event.toString())
-                    .setStatus(Status.PASSED));
+            lifecycle.getCurrentTestCase().ifPresent(uuid -> {
+                final String stepUUID = UUID.randomUUID().toString();
+                lifecycle.startStep(stepUUID, new StepResult()
+                        .setName(event.toString())
+                        .setStatus(Status.PASSED));
 
-            lifecycle.updateStep(stepResult -> stepResult.setStart(stepResult.getStart() - event.getDuration()));
+                lifecycle.updateStep(stepResult -> stepResult.setStart(stepResult.getStart() - event.getDuration()));
 
-            if (LogEvent.EventStatus.PASS.equals(event.getStatus())) {
-                lifecycle.addAttachment("Screenshot", "image/png", "png", getScreenshotBytes());
-                lifecycle.updateStep(stepResult -> {
-                    final StatusDetails details = ResultsUtils.getStatusDetails(event.getError())
-                            .orElse(new StatusDetails());
-                    stepResult.setStatus(Status.PASSED);
-                    stepResult.setStatusDetails(details);
-                });
-            }
-            if (LogEvent.EventStatus.FAIL.equals(event.getStatus())) {
-                lifecycle.addAttachment("Screenshot", "image/png", "png", getScreenshotBytes());
-                lifecycle.addAttachment("Page source", "text/html", "html", getPageSourceBytes());
-                lifecycle.updateStep(stepResult -> {
-                    final StatusDetails details = ResultsUtils.getStatusDetails(event.getError())
-                            .orElse(new StatusDetails());
-                    stepResult.setStatus(Status.FAILED);
-                    stepResult.setStatusDetails(details);
-                });
-            }
-            lifecycle.stopStep(stepUUID);
-        });
+                if ((isSaveScreenshotsEnabled() && event.getSubject().contains("should")) || LogEvent.EventStatus.FAIL.equals(event.getStatus())) {
+                    lifecycle.addAttachment("Screenshot", "image/png", "png", getScreenshotBytes());
+                }
+                if (LogEvent.EventStatus.FAIL.equals(event.getStatus())) {
+                    lifecycle.updateStep(stepResult -> {
+                        final StatusDetails details = ResultsUtils.getStatusDetails(event.getError())
+                                .orElse(new StatusDetails());
+                        stepResult.setStatus(Status.FAILED);
+                        stepResult.setStatusDetails(details);
+                    });
+                }
+                lifecycle.stopStep(stepUUID);
+            });
     }
 
 

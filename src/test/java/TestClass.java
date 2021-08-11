@@ -23,8 +23,8 @@ public class TestClass {
 
         step("Open www.oracle.com", () -> {
             open(ORACLE_URL);
-//            Assert.assertTrue($(By.xpath(CONTACT_SALES)).isDisplayed(), "Tha main page is opened");
             $(By.xpath(CONTACT_SALES)).shouldBe(Condition.visible);
+            $(By.xpath(CONTACT_SALES)).shouldNotBe(Condition.visible);
         });
     }
 }
