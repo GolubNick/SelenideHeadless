@@ -9,7 +9,6 @@ import io.qameta.allure.model.StepResult;
 import io.qameta.allure.util.ResultsUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 public class AllureCustomListener implements LogEventListener {
@@ -35,8 +34,7 @@ public class AllureCustomListener implements LogEventListener {
         return this.saveScreenshots;
     }
 
-
-        @Override
+    @Override
     public void afterEvent(final LogEvent event) {
             lifecycle.getCurrentTestCase().ifPresent(uuid -> {
                 final String stepUUID = UUID.randomUUID().toString();
@@ -46,10 +44,10 @@ public class AllureCustomListener implements LogEventListener {
 
                 lifecycle.updateStep(stepResult -> stepResult.setStart(stepResult.getStart() - event.getDuration()));
 
-                if ((isSaveScreenshotsEnabled() && event.getSubject().contains("should")) || LogEvent.EventStatus.FAIL.equals(event.getStatus())) {
+                if ((isSaveScreenshotsEnabled() && event.getSubject().contains("should")) || isFailed(event)) {
                     lifecycle.addAttachment("Screenshot", "image/png", "png", getScreenshotBytes());
                 }
-                if (LogEvent.EventStatus.FAIL.equals(event.getStatus())) {
+                if (isFailed(event)) {
                     lifecycle.updateStep(stepResult -> {
                         final StatusDetails details = ResultsUtils.getStatusDetails(event.getError())
                                 .orElse(new StatusDetails());
@@ -61,15 +59,13 @@ public class AllureCustomListener implements LogEventListener {
             });
     }
 
+    private boolean isFailed(LogEvent event) {
+        return LogEvent.EventStatus.FAIL.equals(event.getStatus());
+    }
 
     private static byte[] getScreenshotBytes() {
         return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
     }
-
-    private static byte[] getPageSourceBytes() {
-        return WebDriverRunner.getWebDriver().getPageSource().getBytes(StandardCharsets.UTF_8);
-    }
-
 
     @Override
     public void beforeEvent(LogEvent logEvent) {
