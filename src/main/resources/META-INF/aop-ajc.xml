@@ -1,5 +1,5 @@
 <aspectj>
     <aspects>
-        <aspect name="src.test.java.TestAOP"/>
+        <aspect name="Aspects"/>
     </aspects>
 </aspectj>

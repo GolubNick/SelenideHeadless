@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 
@@ -23,8 +24,8 @@ public class TestClass {
 
         step("Open www.oracle.com", () -> {
             open(ORACLE_URL);
-            $(By.xpath(CONTACT_SALES)).shouldBe(Condition.visible);
-            $(By.xpath(CONTACT_SALES)).shouldNotBe(Condition.visible);
+            $(By.xpath(CONTACT_SALES)).shouldBe(visible);
+            $(By.xpath(CONTACT_SALES)).shouldNotBe(visible);
         });
     }
 }

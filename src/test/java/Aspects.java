@@ -3,7 +3,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 @Aspect
-public class TestAOP {
+public class Aspects {
 
     @Around("execution(* com.codeborne.selenide.SelenideElement.should*(..))")
     public Object monitor(ProceedingJoinPoint pjp) throws Throwable {
