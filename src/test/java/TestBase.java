@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.logevents.SelenideLogger.addListener;
 
-@Listeners({SoftAsserts.class, TestNGCustomListener.class})
+@Listeners(SoftAsserts.class)
 public class TestBase {
 
     private String baseUrl = null;
