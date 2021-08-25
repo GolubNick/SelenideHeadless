@@ -20,6 +20,7 @@ public class TestClass extends TestBase {
     private final String ANALYTICS = "//*[@data-lbl='o-products-menu-infra/oci-bus-analyt']";
     private final String APPLICATION_DEVELOPMENT = "//*[@data-lbl='o-products-menu-infra/oci-app-dev']";
     private final String CLOUD_DATABASE_SERVICES = "//*[@data-lbl='o-products-menu-infra/oci-database']";
+    private final String CLOUD_DATABASE_SERVICES_FAILE = "//*[@data-lbl='o-products-menu-infra/oci-database_faile']";
     private final String CONTENT_MANAGEMENT = "//*[@data-lbl='o-products-menu-infra/oci-mktg-cloud-prods-cont-exp']";
     private final String INTEGRATION = "//*[@data-lbl='o-products-menu-infra/oci-mware-data-int']";
     private final String OBSERVABILITY_MANAGEMENT = "//*[@data-lbl='o-products-menu-infra/oci-cloud-sys-mgt-cloud-svces']";
@@ -120,6 +121,7 @@ public class TestClass extends TestBase {
             $(By.xpath((CLOUD_DATABASE_SERVICES))).click();
             $(By.xpath((TITLE))).shouldHave(text("1"+CLOUD_DATABASE_SERVICES_LABEL));
             $(By.xpath((TITLE))).shouldHave(text(CLOUD_DATABASE_SERVICES_LABEL));
+            $(By.xpath((CLOUD_DATABASE_SERVICES_FAILE))).click();
         });
     }
 

@@ -1,7 +1,6 @@
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.testng.SoftAsserts;
-import org.openqa.selenium.By;
 import org.testng.annotations.*;
 
 import java.io.IOException;
@@ -9,16 +8,13 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import static com.codeborne.selenide.AssertionMode.SOFT;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.logevents.SelenideLogger.addListener;
 
 @Listeners(SoftAsserts.class)
 public class TestBase {
 
     private String baseUrl = null;
-    private final String MAIN_CONTENT = "//*[@class='gwt-Frame']";
-    private final String ACCEPT_ALL = "//*[@class='call']";
 
     @BeforeClass
     public void init() {
@@ -29,16 +25,12 @@ public class TestBase {
             Configuration.assertionMode = SOFT;
         }
         Configuration.headless = isHeadless;
-        addListener("AllureCustomListener", new AllureCustomListener());
-
     }
 
     @BeforeMethod
     public void before() {
+        addListener("AllureCustomListener", new AllureCustomListener());
         open(baseUrl);
-        if ($(By.xpath((ACCEPT_ALL))).exists()) {
-            $(By.xpath((ACCEPT_ALL))).click();
-        }
     }
 
     @AfterMethod
