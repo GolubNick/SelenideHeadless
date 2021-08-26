@@ -1,7 +1,6 @@
 import io.qameta.allure.model.ExecutableItem;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StepResult;
-import io.qameta.allure.model.TestResult;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 

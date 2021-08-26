@@ -9,11 +9,7 @@ import io.qameta.allure.model.StepResult;
 import io.qameta.allure.util.ResultsUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-
-import java.util.HashSet;
 import java.util.UUID;
-
-import static io.qameta.allure.Allure.getLifecycle;
 
 public class AllureCustomListener implements LogEventListener {
 
