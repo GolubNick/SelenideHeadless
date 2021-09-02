@@ -20,6 +20,7 @@ public class TestBase {
 
     private static final TestConfig config = loadTestConfig("config.yaml", TestConfig.class);
     private final String BASE_URL = config.selenideConfig.baseUrl;
+    private static final String notSubstitutedParametersRegex = "\\n.*: \\$\\{.*}";
 
     @BeforeClass
     public void init() {
@@ -38,7 +39,8 @@ public class TestBase {
             String templateYaml = Files.readString(Path.of(yaml));
             Map<String, String> envs = System.getenv();
             StringSubstitutor sub = new StringSubstitutor(envs);
-            String resolvedYaml = sub.replace(templateYaml);
+            String substitutedYaml = sub.replace(templateYaml);
+            String resolvedYaml = substitutedYaml.replaceAll(notSubstitutedParametersRegex, "");
             ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
             config = mapper.readValue(resolvedYaml, configClass);
         } catch (IOException e) {
