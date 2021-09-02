@@ -1,0 +1,7 @@
+selenideConfig:
+  baseUrl: https://oracle.com
+#  remote: http://localhost:4444/wd/hub
+  headless: ${HEADLESS}
+  assertionMode: SOFT
+generalConfig:
+  someParameter: example
