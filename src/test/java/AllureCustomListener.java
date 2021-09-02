@@ -72,7 +72,5 @@ public class AllureCustomListener implements LogEventListener {
     }
 
     @Override
-    public void beforeEvent(LogEvent logEvent) {
-
-    }
+    public void beforeEvent(LogEvent logEvent) {}
 }

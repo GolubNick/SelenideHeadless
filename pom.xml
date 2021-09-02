@@ -11,6 +11,7 @@
     <properties>
         <java.version>11</java.version>
         <aspect.version>1.9.7</aspect.version>
+        <auto-value.version>1.8.2</auto-value.version>
     </properties>
 
     <build>
@@ -88,10 +89,30 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.google.auto.value</groupId>
+            <artifactId>auto-value-annotations</artifactId>
+            <version>${auto-value.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.auto.value</groupId>
+            <artifactId>auto-value</artifactId>
+            <version>${auto-value.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.12.3</version>
+        </dependency>
+        <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
             <version>5.23.2</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
